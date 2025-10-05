@@ -1,0 +1,35 @@
+{% extends 'announcements/base.html' %}
+
+{% block title %}IT373 | {{ announcement.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <a href="{% url 'announcement_list' %}" 
+       class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6 transition duration-200">
+        ← Back to Announcements
+    </a>
+    
+    <article class="bg-white rounded-lg shadow-md p-8">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ announcement.title }}</h1>
+            <p class="text-gray-600">{{ announcement.created_at|date:"F j, Y - g:i A" }}</p>
+        </header>
+        
+        <div class="prose max-w-none text-gray-700">
+            <div id="content-preview" class="content-preview">
+                {{ announcement.content|truncatechars:300 }}
+            </div>
+            <div id="content-full" class="content-full hidden">
+                {{ announcement.content|linebreaks }}
+            </div>
+            
+            {% if announcement.content|length > 300 %}
+            <button id="toggle-content" 
+                    class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                Read more
+            </button>
+            {% endif %}
+        </div>
+    </article>
+</div>
+{% endblock %}
